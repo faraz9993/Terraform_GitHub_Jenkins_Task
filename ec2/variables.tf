@@ -3,7 +3,7 @@ variable "ami_id" {
 }
 
 data "local_file" "public_key" {
-  filename = secrets.ID_RSA_PUB
+  filename = "ec2/id_rsa.pub"
 }
 
 locals {
