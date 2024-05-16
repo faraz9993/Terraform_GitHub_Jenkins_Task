@@ -36,7 +36,6 @@ pipeline {
                 }
             }
         }
-    }
 
         
 
@@ -53,7 +52,6 @@ pipeline {
                 }
             }
         }
-    }
 
     post {
         always {
@@ -61,3 +59,4 @@ pipeline {
             cleanWs()
         }
     }
+}
