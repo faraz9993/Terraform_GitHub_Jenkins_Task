@@ -3,6 +3,11 @@ resource "aws_instance" "first_resource" {
   instance_type   = "t2.micro"
   subnet_id       = "subnet-0380079a7f48b2780"  # Replace with your subnet ID
   availability_zone = "${var.aws_region}a"  # Example: us-west-2a
+
+tags = {
+    Name = "Jenkins Instance"
+  }
+
 }
 
 
