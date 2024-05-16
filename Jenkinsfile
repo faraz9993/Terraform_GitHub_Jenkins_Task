@@ -32,7 +32,7 @@ pipeline {
                         $class: 'AmazonWebServicesCredentialsBinding',
                         credentialsId: 'Jenkins_AWS',
                     ]]) {
-                        sh 'terraform apply -auto-approve'
+                        sh 'terraform apply -auto-approve main.tf'
                     }
                 }
             }
