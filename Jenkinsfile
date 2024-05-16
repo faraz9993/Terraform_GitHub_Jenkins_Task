@@ -23,6 +23,22 @@ pipeline {
             }
         }
 
+        stage('Terraform Plan') {
+            steps {
+                // Apply Terraform changes with auto-approve
+                script {
+                    withCredentials([[
+                        $class: 'AmazonWebServicesCredentialsBinding',
+                        credentialsId: 'Jenkins_AWS',
+                    ]]) {
+                        sh 'terraform plan'
+                    }
+                }
+            }
+        }
+    }
+
+        
 
         stage('Terraform Apply') {
             steps {
