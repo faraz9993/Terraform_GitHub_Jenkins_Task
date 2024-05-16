@@ -9,6 +9,15 @@ pipeline {
             }
         }
 
+        stage('Navigate to Terraform directory') {
+            steps {
+                // Change directory to where your Terraform files are located
+                dir('ec2') {
+                    // Execute subsequent Terraform commands here
+                }
+            }
+        }
+
         stage('Terraform Init') {
             steps {
                 // Initialize Terraform
