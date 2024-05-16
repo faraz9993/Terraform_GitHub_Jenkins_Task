@@ -61,26 +61,12 @@ pipeline {
                             choice(choices: ['Yes', 'No'], description: 'Destroy Terraform Yes or No?', name: 'destroyConfirmation')
                         ]
                     )
-                    if (userInput == 'No') {
+                    if (userInput == 'Yes') {
                         // Proceed with Terraform destroy
-                        currentBuild.result = 'ABORTED' // Mark build as aborted so that it stops after this stage
-                    }
-                }
-            }
-        }
-        
-        stage('Terraform Destroy') {
-            when {
-                expression { return env.BUILD_RESULT != null && env.BUILD_RESULT.equals('ABORTED') }
-            }
-            steps {
-                // Destroy Terraform resources
-                script {
-                    withCredentials([[
-                        $class: 'AmazonWebServicesCredentialsBinding',
-                        credentialsId: 'Jenkins_AWS',
-                    ]]) {
                         sh 'terraform destroy --auto-approve'
+                    } else {
+                        // Mark build as aborted to skip the destroy stage
+                        currentBuild.result = 'ABORTED'
                     }
                 }
             }
