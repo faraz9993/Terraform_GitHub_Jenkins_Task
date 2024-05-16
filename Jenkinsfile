@@ -61,7 +61,7 @@ pipeline {
                             choice(choices: ['Yes', 'No'], description: 'Destroy Terraform Yes or No?', name: 'destroyConfirmation')
                         ]
                     )
-                    if (userInput == 'Yes') {
+                    if (userInput == 'No') {
                         // Proceed with Terraform destroy
                         currentBuild.result = 'ABORTED' // Mark build as aborted so that it stops after this stage
                     }
