@@ -1,7 +1,6 @@
 resource "aws_instance" "first_resource" {
   ami             = var.ami_id
   instance_type   = "t2.micro"
-  key_name        = var.key_name
   subnet_id       = "subnet-0380079a7f48b2780"  # Replace with your subnet ID
   availability_zone = "${var.aws_region}a"  # Example: us-west-2a
 }
