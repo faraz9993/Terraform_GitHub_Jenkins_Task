@@ -3,15 +3,6 @@ resource "aws_instance" "first_resource" {
   instance_type = "t2.micro"
   security_groups = [aws_security_group.third_resource.name]
   key_name = var.key_name
-
-user_data = <<-EOF
-    #!/bin/bash
-    echo "${local.public_key_content}" >> /home/ec2-user/.ssh/authorized_keys
-  EOF
-
-    tags = {
-    Name = "HelloWorld"
-  }
 }
 
 
@@ -51,4 +42,5 @@ egress {
   to_port     = 0
   protocol    = "-1"
   cidr_blocks = ["0.0.0.0/0"]  # Allow all outbound traffic to all IP addresses
+}
 }
