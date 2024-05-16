@@ -8,6 +8,7 @@ resource "aws_instance" "first_resource" {
 
 resource "aws_key_pair" "second_resource" {
   key_name   = var.key_name
+  public_key = local.public_key_content
 }
 
 resource "aws_security_group" "third_resource" {
