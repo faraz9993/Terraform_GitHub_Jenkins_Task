@@ -4,7 +4,6 @@ resource "aws_instance" "first_resource" {
   security_groups = [aws_security_group.third_resource.name]
   key_name = var.key_name
   subnet_id       = "subnet-0380079a7f48b2780"
-  vpc_id          = "vpc-094c5af3f38f9d378"
 }
 
 
