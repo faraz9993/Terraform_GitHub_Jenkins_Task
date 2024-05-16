@@ -18,6 +18,18 @@ pipeline {
             }
         }
 
+        stage('Create Terraform workspace and set as current') {
+            steps {
+                script {
+                    // Create a Terraform workspace with the Jenkins workspace name
+                    sh 'terraform workspace new "Faraz" || true'
+                    // Set the Terraform workspace as the current workspace
+                    sh 'export TF_WORKSPACE="Faraz"'
+                }
+            }
+        }
+
+        
         stage('Terraform Init') {
             steps {
                 // Initialize Terraform
