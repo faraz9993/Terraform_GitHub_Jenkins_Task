@@ -23,19 +23,6 @@ pipeline {
             }
         }
 
-        stage('Terraform Plan') {
-            steps {
-                // Run Terraform plan
-                script {
-                    withCredentials([[
-                        $class: 'AmazonWebServicesCredentialsBinding',
-                        credentialsId: 'Jenkins_AWS',
-                    ]]) {
-                        sh 'terraform plan -out=tfplan'
-                    }
-                }
-            }
-        }
 
         stage('Terraform Apply') {
             steps {
