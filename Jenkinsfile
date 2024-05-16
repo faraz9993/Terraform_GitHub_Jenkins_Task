@@ -15,9 +15,7 @@ pipeline {
                 script {
                     withCredentials([[
                         $class: 'AmazonWebServicesCredentialsBinding',
-                        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                         credentialsId: 'Jenkins_AWS',
-                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                     ]]) {
                         sh 'terraform init'
                     }
@@ -31,9 +29,7 @@ pipeline {
                 script {
                     withCredentials([[
                         $class: 'AmazonWebServicesCredentialsBinding',
-                        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                         credentialsId: 'Jenkins_AWS',
-                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                     ]]) {
                         sh 'terraform plan -out=tfplan'
                     }
@@ -47,9 +43,7 @@ pipeline {
                 script {
                     withCredentials([[
                         $class: 'AmazonWebServicesCredentialsBinding',
-                        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                         credentialsId: 'Jenkins_AWS',
-                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                     ]]) {
                         sh 'terraform apply -auto-approve tfplan'
                     }
