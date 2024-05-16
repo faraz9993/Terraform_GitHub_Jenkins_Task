@@ -1,18 +1,17 @@
 resource "aws_instance" "first_resource" {
-  ami           = var.ami_id
-  instance_type = "t2.micro"
-  security_groups = [aws_security_group.third_resource.name]
-  key_name = var.key_name
+  ami             = var.ami_id
+  instance_type   = "t2.micro"
+  subnet_id       = "subnet-0380079a7f48b2780"  # Replace with your subnet ID
+  availability_zone = "${var.aws_region}a"  # Example: us-west-2a
 
-user_data = <<-EOF
-    #!/bin/bash
-    echo "${local.public_key_content}" >> /home/ec2-user/.ssh/authorized_keys
-  EOF
-
-    tags = {
-    Name = "HelloWorld"
+tags = {
+    Name = "Jenkins Instance"
   }
+
 }
+
+
+
 
 
 resource "aws_key_pair" "second_resource" {
@@ -26,30 +25,30 @@ resource "aws_security_group" "third_resource" {
 
 
   ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["${var.my_ip}/32"]
-  }
+  from_port   = 22
+  to_port     = 22
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]  # Allow SSH from all IP addresses
+}
 
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["${var.my_ip}/32"]
-  }
+ingress {
+  from_port   = 80
+  to_port     = 80
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]  # Allow HTTP from all IP addresses
+}
 
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["${var.my_ip}/32"]
-  }
+ingress {
+  from_port   = 443
+  to_port     = 443
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]  # Allow HTTPS from all IP addresses
+}
 
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+egress {
+  from_port   = 0
+  to_port     = 0
+  protocol    = "-1"
+  cidr_blocks = ["0.0.0.0/0"]  # Allow all outbound traffic to all IP addresses
+}
 }

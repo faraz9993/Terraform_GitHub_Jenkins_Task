@@ -1,15 +1,9 @@
 variable "ami_id" {
-  default = "ami-09040d770ffe2224f"
-}
-
-variable "key_name" {
-  default     = "Shivi_key"
-  description = "The name of the EC2 key pair"
-  type        = string
+  default = "ami-04b70fa74e45c3917"
 }
 
 data "local_file" "public_key" {
-  filename = "/home/einfochips/.ssh/id_rsa.pub"
+  filename = "ec2/id_rsa.pub"
 }
 
 locals {
@@ -17,7 +11,13 @@ locals {
 }
 
 
-variable "my_ip" {
-  default = "14.97.73.250"
-  type    = string
+variable "key_name" {
+  default     = "Shivi_key"
+  description = "The name of the EC2 key pair"
+  type        = string
+}
+
+variable "aws_region" {
+  description = "The AWS region where resources will be created"
+  default     = "us-east-1"  # Change this to your desired AWS region
 }
