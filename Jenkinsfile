@@ -50,6 +50,41 @@ pipeline {
                 }
             }
         }
+        
+        stage('Ask for Destroy Confirmation') {
+            steps {
+                script {
+                    def userInput = input(
+                        id: 'destroyConfirmation',
+                        message: 'Do you want to run Terraform destroy?',
+                        parameters: [
+                            choice(choices: ['Yes', 'No'], description: 'Destroy Terraform Yes or No?', name: 'destroyConfirmation')
+                        ]
+                    )
+                    if (userInput == 'Yes') {
+                        // Proceed with Terraform destroy
+                        currentBuild.result = 'ABORTED' // Mark build as aborted so that it stops after this stage
+                    }
+                }
+            }
+        }
+        
+        stage('Terraform Destroy') {
+            when {
+                expression { return env.BUILD_RESULT != null && env.BUILD_RESULT.equals('ABORTED') }
+            }
+            steps {
+                // Destroy Terraform resources
+                script {
+                    withCredentials([[
+                        $class: 'AmazonWebServicesCredentialsBinding',
+                        credentialsId: 'Jenkins_AWS',
+                    ]]) {
+                        sh 'terraform destroy --auto-approve'
+                    }
+                }
+            }
+        }
     }
 
     post {
