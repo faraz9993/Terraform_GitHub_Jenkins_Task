@@ -36,9 +36,7 @@ pipeline {
                 }
             }
         }
-
         
-
         stage('Terraform Apply') {
             steps {
                 // Apply Terraform changes with auto-approve
@@ -52,6 +50,7 @@ pipeline {
                 }
             }
         }
+    }
 
     post {
         always {
@@ -59,5 +58,4 @@ pipeline {
             cleanWs()
         }
     }
-}
 }
