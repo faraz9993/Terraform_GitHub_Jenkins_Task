@@ -1,5 +1,5 @@
 variable "ami_id" {
-  default = "ami-09040d770ffe2224f"
+  default = "ami-04b70fa74e45c3917"
 }
 
 data "local_file" "public_key" {
