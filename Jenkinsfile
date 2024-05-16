@@ -26,7 +26,7 @@ pipeline {
                         $class: 'AmazonWebServicesCredentialsBinding',
                         credentialsId: 'Jenkins_AWS',
                     ]]) {
-                        sh 'cd /ec2 && terraform init'
+                        sh 'cd ec2 && terraform init'
                     }
                 }
             }
