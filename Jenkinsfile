@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment{
-            my_credentials = credentials('AKIAUYXBFISTG2UECW6E')
-        }
-
     stages {
         stage('Checkout') {
             steps {
@@ -12,13 +8,19 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/faraz9993/Terraform_GitHub_Jenkins_Task.git'
             }
         }
-        
+
         stage('Terraform Init') {
             steps {
                 // Initialize Terraform
                 script {
-                    def tfInitCmd = 'terraform init'
-                    sh tfInitCmd
+                    withCredentials([[
+                        $class: 'AmazonWebServicesCredentialsBinding',
+                        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                        credentialsId: 'Jenkins_AWS',
+                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                    ]]) {
+                        sh 'terraform init'
+                    }
                 }
             }
         }
@@ -27,8 +29,14 @@ pipeline {
             steps {
                 // Run Terraform plan
                 script {
-                    def tfPlanCmd = 'terraform plan -out=tfplan'
-                    sh tfPlanCmd
+                    withCredentials([[
+                        $class: 'AmazonWebServicesCredentialsBinding',
+                        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                        credentialsId: 'Jenkins_AWS',
+                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                    ]]) {
+                        sh 'terraform plan -out=tfplan'
+                    }
                 }
             }
         }
@@ -37,8 +45,14 @@ pipeline {
             steps {
                 // Apply Terraform changes with auto-approve
                 script {
-                    def tfApplyCmd = 'terraform apply -auto-approve tfplan'
-                    sh tfApplyCmd
+                    withCredentials([[
+                        $class: 'AmazonWebServicesCredentialsBinding',
+                        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                        credentialsId: 'Jenkins_AWS',
+                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                    ]]) {
+                        sh 'terraform apply -auto-approve tfplan'
+                    }
                 }
             }
         }
