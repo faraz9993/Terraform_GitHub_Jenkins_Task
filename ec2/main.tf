@@ -1,10 +1,14 @@
 resource "aws_instance" "first_resource" {
-  ami           = var.ami_id
-  instance_type = "t2.micro"
+  ami             = var.ami_id
+  instance_type   = "t2.micro"
+  key_name        = var.key_name
+  subnet_id       = "subnet-0380079a7f48b2780"  # Replace with your subnet ID
+
+  # Specify security group separately
   security_groups = [aws_security_group.third_resource.name]
-  key_name = var.key_name
-  subnet_id       = "subnet-0380079a7f48b2780"
 }
+
+
 
 
 resource "aws_key_pair" "second_resource" {
