@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        AWS_ACCESS_KEY_ID     = secret.AWS_ACCESS_KEY_ID
-        AWS_SECRET_ACCESS_KEY = secret.AWS_SECRET_ACCESS_KEY
-    }
-
     stages {
         stage('Checkout') {
             steps {
