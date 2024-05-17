@@ -7,6 +7,7 @@ resource "aws_instance" "first_resource" {
 tags = {
     Name = "Jenkins Instance"
   }
+  vpc_security_group_ids = [aws_security_group.third_resource.id]
 
 }
 
