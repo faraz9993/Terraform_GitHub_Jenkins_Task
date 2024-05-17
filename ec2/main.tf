@@ -9,6 +9,8 @@ tags = {
   }
   vpc_security_group_ids = [aws_security_group.third_resource.id]
 
+  key_name = aws_key_pair.second_resource.key_name
+
 }
 
 
