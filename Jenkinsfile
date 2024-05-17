@@ -37,11 +37,22 @@ pipeline {
         stage('Terraform Apply') {
             steps {
                 script {
-                    withCredentials([[
-                        $class: 'AmazonWebServicesCredentialsBinding',
-                        credentialsId: 'Jenkins_AWS',
-                    ]]) {
-                        sh 'terraform apply --auto-approve'
+                    def userInput = input(
+                        id: 'applyConfirmation',
+                        message: 'Do you want to run Terraform apply?',
+                        parameters: [
+                            choice(choices: ['Yes', 'No'], description: 'Apply Terraform Yes or No?', name: 'applyConfirmation')
+                        ]
+                    )
+                    if (userInput == 'Yes') {
+                        withCredentials([[
+                            $class: 'AmazonWebServicesCredentialsBinding',
+                            credentialsId: 'Jenkins_AWS',
+                        ]]) {
+                            sh 'terraform apply --auto-approve'
+                        }
+                    } else {
+                        currentBuild.result = 'ABORTED'
                     }
                 }
             }
